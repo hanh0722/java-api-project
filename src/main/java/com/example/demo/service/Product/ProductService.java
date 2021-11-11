@@ -1,5 +1,7 @@
 package com.example.demo.service.Product;
 
+import java.util.List;
+
 import com.example.demo.model.Product.Product;
 import com.example.demo.repository.ProductRepository.ProductRepository;
 
@@ -15,5 +17,8 @@ public class ProductService {
     public Product addProduct(Product product){
         return productRepository.insert(product);
     }
-    
+
+    public List<Product> getProducts(){
+        return productRepository.findAll();
+    }
 }
