@@ -14,11 +14,20 @@ public class User {
     @Id
     private String _id;
     private String name;
-    @Indexed(unique = true)
+    @Indexed(name = "email" ,unique = true)
     private String email;
     private String password;
     private List<CartItem> cart;
     private String phone;
+
+    public String get_id() {
+        return _id;
+    }
+
+    public void set_id(String _id) {
+        this._id = _id;
+    }
+
     private BasicInformation basic_information;
     private String avatar;
 
