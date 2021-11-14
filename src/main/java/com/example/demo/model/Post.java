@@ -3,11 +3,12 @@ package com.example.demo.model;
 import lombok.AllArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 @AllArgsConstructor
-@Document(collection = "post")
+@Document(collection = "blogs")
 public class Post {
     @Id
-    private String id;
+    private String _id;
     private String title,des,content,url;
     private boolean publish;
 
@@ -15,25 +16,16 @@ public class Post {
         super();
     }
 
-    public Post( String title, String des, String content, String url, boolean publish) {
-        super();
-        this.title = title;
-        this.des = des;
-        this.content = content;
-        this.url = url;
-        this.publish = publish;
-    }
-
     public String getId() {
-        return id;
+        return _id;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setId(String _id) {
+        this._id = _id;
     }
 
     public String getTitle() {
-        return title;
+        return this.title;
     }
 
     public void setTitle(String title) {
@@ -57,7 +49,7 @@ public class Post {
     }
 
     public String getUrl() {
-        return url;
+        return this.url;
     }
 
     public void setUrl(String url) {
@@ -65,7 +57,7 @@ public class Post {
     }
 
     public boolean isPublish() {
-        return publish;
+        return this.publish;
     }
 
     public void setPublish(boolean publish) {
