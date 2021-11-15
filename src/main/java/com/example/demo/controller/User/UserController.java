@@ -31,7 +31,6 @@ public class UserController {
     public ResponseEntity<List<User>> getUsers(){
         return ResponseEntity.ok().body(userService.getUsers());
     }    
-    
     @PostMapping
     public ResponseEntity<?> addNewUser(@RequestBody User user){
         try{
@@ -45,10 +44,19 @@ public class UserController {
             return ResponseEntity.badRequest().body(new ErrrorException(400, "User existed with that email"));
         }
     }
-    @GetMapping("/{id}")
+    @GetMapping("id/{id}")
     public ResponseEntity<?> getUserById(@PathVariable String id){
         try{
             User user = userService.getUserById(id);
+            return ResponseEntity.ok(user);
+        }catch(Exception err){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrrorException(404, "User is not existed"));
+        }
+    }
+    @GetMapping("get/{email}")
+    public ResponseEntity<?> getUserByEmail(@PathVariable String email){
+        try{
+            User user = userService.getUserByEmail(email);
             return ResponseEntity.ok(user);
         }catch(Exception err){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrrorException(404, "User is not existed"));

@@ -6,26 +6,30 @@ import com.example.demo.model.CartItem.CartItem;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
+import lombok.AllArgsConstructor;
+
+@AllArgsConstructor
 @Document(collection = "users")
 public class User {
     @Id
-    private String _id;
+    private String id;
     private String name;
     @Indexed(name = "email" ,unique = true)
+    @Field(name = "email")
     private String email;
     private String password;
     private List<CartItem> cart;
     private String phone;
 
     public String get_id() {
-        return _id;
+        return id;
     }
 
-    public void set_id(String _id) {
-        this._id = _id;
+    public void set_id(String id) {
+        this.id = id;
     }
 
     private BasicInformation basic_information;
