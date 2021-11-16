@@ -28,6 +28,9 @@ public class UserServiceImplement implements UserService, UserDetailsService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userRepository.findUserByEmail(email).orElseThrow(() -> new UsernameNotFoundException("user is not existed in db"));
         Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
+        user.getRole().forEach(role -> {
+            authorities.add(new SimpleGrantedAuthority(role));
+        });
         return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), authorities);
     }
 
@@ -62,6 +65,9 @@ public class UserServiceImplement implements UserService, UserDetailsService {
     public User addNewUser(User user) {
         // TODO Auto-generated method stub 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        ArrayList<String> role = new ArrayList<>();
+        role.add("ROLE_USER");
+        user.setRole(role);
         return userRepository.insert(user);
     }
 }

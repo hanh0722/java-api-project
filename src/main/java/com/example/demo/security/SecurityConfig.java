@@ -38,13 +38,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         CustomAuthorizationFilter customAuthorizationFilter = new CustomAuthorizationFilter(authenticationManagerBean());
         customAuthorizationFilter.setFilterProcessesUrl("/api/login");
         http.csrf().disable();
-        http.authorizeRequests().antMatchers("/api/login").permitAll();
+        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        http.authorizeRequests().antMatchers("/api/login/**").permitAll();
         // http.authorizeRequests().antMatchers(HttpMethod.GET, "/api/user").permitAll();
         // all route for permit all, dont need to check security
-        http.authorizeRequests().antMatchers("/api/user/**").permitAll();
+        http.authorizeRequests().antMatchers(HttpMethod.GET, "/api/user/**").hasAnyAuthority("ROLE_USER");  
         // error in set only check token, if it's good, can access
         // add specific route for checking security
-        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.authorizeRequests().anyRequest().authenticated();
         http.addFilter(customAuthorizationFilter);
         http.addFilterBefore(new CustomAuthorizationUser(), UsernamePasswordAuthenticationFilter.class);

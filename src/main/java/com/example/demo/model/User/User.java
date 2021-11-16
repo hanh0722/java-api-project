@@ -1,5 +1,7 @@
 package com.example.demo.model.User;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import com.example.demo.model.CartItem.CartItem;
@@ -17,12 +19,23 @@ public class User {
     @Id
     private String id;
     private String name;
-    @Indexed(name = "email" ,unique = true)
+    @Indexed(name = "email", unique = true)
     @Field(name = "email")
     private String email;
     private String password;
     private List<CartItem> cart;
     private String phone;
+    private Collection<String> Role = new ArrayList<>();
+    private BasicInformation basic_information;
+    private String avatar;
+
+    public Collection<String> getRole() {
+        return Role;
+    }
+
+    public void setRole(Collection<String> role) {
+        Role = role;
+    }
 
     public String get_id() {
         return id;
@@ -31,9 +44,6 @@ public class User {
     public void set_id(String id) {
         this.id = id;
     }
-
-    private BasicInformation basic_information;
-    private String avatar;
 
     public String getName() {
         return name;
