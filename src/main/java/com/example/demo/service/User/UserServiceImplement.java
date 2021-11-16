@@ -66,6 +66,7 @@ public class UserServiceImplement implements UserService, UserDetailsService {
         // TODO Auto-generated method stub 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         ArrayList<String> role = new ArrayList<>();
+        user.setVerified(false);
         role.add("ROLE_USER");
         user.setRole(role);
         return userRepository.insert(user);

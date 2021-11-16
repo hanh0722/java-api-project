@@ -26,8 +26,43 @@ public class User {
     private List<CartItem> cart;
     private String phone;
     private Collection<String> Role = new ArrayList<>();
+    private String tokenVefiry;
+    private String OTP;
+    public String getOTP() {
+        return OTP;
+    }
+
+    public void setOTP(String oTP) {
+        OTP = oTP;
+    }
+
+    public String getTokenVefiry() {
+        return tokenVefiry;
+    }
+
+    public void setTokenVefiry(String tokenVefiry) {
+        this.tokenVefiry = tokenVefiry;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public Boolean getVerified() {
+        return verified;
+    }
+
+    public void setVerified(Boolean verified) {
+        this.verified = verified;
+    }
+
     private BasicInformation basic_information;
     private String avatar;
+    private Boolean verified;
 
     public Collection<String> getRole() {
         return Role;
