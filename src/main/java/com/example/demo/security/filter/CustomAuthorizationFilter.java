@@ -36,7 +36,6 @@ public class CustomAuthorizationFilter extends UsernamePasswordAuthenticationFil
             throws AuthenticationException {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
-        System.out.println(email + " " + password);
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(email,
                 password);
         return authenticationManager.authenticate(authenticationToken);
@@ -64,10 +63,23 @@ public class CustomAuthorizationFilter extends UsernamePasswordAuthenticationFil
         // response.setHeader("token", accessToken);
         // response.setHeader("refreshToken", RefreshToken);
         Map<String, String> tokens = new HashMap<>();
+        tokens.put("email", user.getUsername());
         tokens.put("token", accessToken);
         tokens.put("refreshToken", RefreshToken);
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         new ObjectMapper().writeValue(response.getOutputStream(), tokens);
+    }
+
+    @Override
+    protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,
+            AuthenticationException failed) throws IOException, ServletException {
+        
+        Map<String, String> error = new HashMap<>();
+        error.put("code", "422");
+        error.put("message", "Unauthorization, information is wrong");
+        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+        response.setStatus(422);
+        new ObjectMapper().writeValue(response.getOutputStream(), error);
     }
 
 }
