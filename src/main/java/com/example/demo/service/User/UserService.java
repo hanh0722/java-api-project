@@ -11,4 +11,5 @@ public interface UserService {
     User saveBasicInformation(String email, BasicInformation information);
     List<User> getUsers();
     User getUserById(String id);
+    User checkValidateUser(String token);
 }

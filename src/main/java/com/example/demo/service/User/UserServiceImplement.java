@@ -54,6 +54,13 @@ public class UserServiceImplement implements UserService, UserDetailsService {
     }
 
     @Override
+    public User checkValidateUser(String token) {
+        // TODO Auto-generated method stub
+        User user = userRepository.checkValidateUser(token).orElseThrow(() -> new RuntimeException("user is not validation with token"));
+        return user;
+    }
+
+    @Override
     public User saveBasicInformation(String email, BasicInformation information) {
         User user = getUserByEmail(email);
         user.setBasic_information(information);

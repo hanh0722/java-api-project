@@ -12,4 +12,8 @@ public interface UserRepository extends MongoRepository<User, String> {
 
     @Query("{'email': ?0}")
     Optional<User> findUserByEmail(String email);
+    
+    @Query("{'tokenVerify': ?0}")
+    Optional<User> checkValidateUser(String token);
+
 }

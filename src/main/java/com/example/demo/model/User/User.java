@@ -28,6 +28,10 @@ public class User {
     private Collection<String> Role = new ArrayList<>();
     private String tokenVefiry;
     private String OTP;
+    private BasicInformation basic_information;
+    private String avatar;
+    private Boolean verified;
+
     public String getOTP() {
         return OTP;
     }
@@ -37,7 +41,7 @@ public class User {
     }
 
     public String getTokenVefiry() {
-        return tokenVefiry;
+        return this.tokenVefiry;
     }
 
     public void setTokenVefiry(String tokenVefiry) {
@@ -59,10 +63,6 @@ public class User {
     public void setVerified(Boolean verified) {
         this.verified = verified;
     }
-
-    private BasicInformation basic_information;
-    private String avatar;
-    private Boolean verified;
 
     public Collection<String> getRole() {
         return Role;

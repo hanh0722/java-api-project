@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import lombok.AllArgsConstructor;
@@ -60,6 +61,19 @@ public class UserController {
             return ResponseEntity.ok(user);
         }catch(Exception err){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrrorException(404, "User is not existed"));
+        }
+    }
+    @GetMapping("/verify")
+    public ResponseEntity<?> checkUserIsValid(@RequestParam String token){
+        try{
+            User user = userService.checkValidateUser(token);
+            if(user.getVerified()){
+                return ResponseEntity.status(HttpStatus.CONFLICT).body(new ErrrorException(409, "User verified"));
+            }
+            return ResponseEntity.ok().body(user);
+
+        }catch(Exception err){
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(new ErrrorException(422, "user is not validation"));
         }
     }
 }
