@@ -35,6 +35,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        http.cors();
         CustomAuthorizationFilter customAuthorizationFilter = new CustomAuthorizationFilter(authenticationManagerBean());
         customAuthorizationFilter.setFilterProcessesUrl("/api/login");
         http.csrf().disable();
@@ -43,6 +44,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers("/api/user/register").permitAll();
         http.authorizeRequests().antMatchers("/api/user/id/**").permitAll();
         http.authorizeRequests().antMatchers("/api/user/verify/**").permitAll();
+        http.authorizeRequests().antMatchers("/api/user/validate").permitAll();
         // http.authorizeRequests().antMatchers(HttpMethod.GET, "/api/user").permitAll();
         // all route for permit all, dont need to check security
         http.authorizeRequests().antMatchers("/api/user/**").hasAnyAuthority("ROLE_USER");  

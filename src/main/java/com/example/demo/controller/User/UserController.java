@@ -3,14 +3,18 @@ package com.example.demo.controller.User;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import com.example.demo.model.CartItem.CartItem;
 import com.example.demo.model.User.User;
 import com.example.demo.service.User.UserService;
 import com.example.demo.util.ErrrorException;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -74,6 +78,22 @@ public class UserController {
 
         }catch(Exception err){
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(new ErrrorException(422, "user is not validation"));
+        }
+    }
+    @PostMapping("/validate")
+    public ResponseEntity<?> checkOTPOfUser(@RequestBody Map<String, String> context ){
+        try{
+            String id = context.get("id");
+            String token = context.get("OTP");
+            User user = userService.getUserById(id);
+            Boolean matchOTP = user.getOTP().equals(token);
+            if(!matchOTP){
+                return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(new ErrrorException(422, "OTP is not correct"));
+            }
+            User userAfterUpdate = userService.removeOTPChecking(id);
+            return ResponseEntity.ok().body(userAfterUpdate);
+        }catch(Exception err){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrrorException(422, "user is not existed"));
         }
     }
 }

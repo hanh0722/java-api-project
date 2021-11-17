@@ -12,4 +12,5 @@ public interface UserService {
     List<User> getUsers();
     User getUserById(String id);
     User checkValidateUser(String token);
+    User removeOTPChecking(String id);
 }

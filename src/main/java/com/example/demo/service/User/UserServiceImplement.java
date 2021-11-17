@@ -23,6 +23,7 @@ import lombok.AllArgsConstructor;
 public class UserServiceImplement implements UserService, UserDetailsService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
@@ -58,6 +59,15 @@ public class UserServiceImplement implements UserService, UserDetailsService {
         // TODO Auto-generated method stub
         User user = userRepository.checkValidateUser(token).orElseThrow(() -> new RuntimeException("user is not validation with token"));
         return user;
+    }
+
+    @Override
+    public User removeOTPChecking(String id) {
+        User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("user is not existed"));
+        user.setOTP(null);
+        user.setVerified(true);
+        User newUser = userRepository.save(user);
+        return newUser;
     }
 
     @Override
