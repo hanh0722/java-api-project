@@ -31,6 +31,7 @@ public class User {
     private BasicInformation basic_information;
     private String avatar;
     private Boolean verified;
+    private String tokenChangePassword;
 
     public String getOTP() {
         return OTP;
@@ -38,6 +39,14 @@ public class User {
 
     public void setOTP(String oTP) {
         OTP = oTP;
+    }
+
+    public String getTokenChangePassword() {
+        return tokenChangePassword;
+    }
+
+    public void setTokenChangePassword(String tokenChangePassword) {
+        this.tokenChangePassword = tokenChangePassword;
     }
 
     public String getTokenVefiry() {

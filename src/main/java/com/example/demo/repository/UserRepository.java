@@ -15,5 +15,5 @@ public interface UserRepository extends MongoRepository<User, String> {
     
     @Query("{'tokenVerify': ?0}")
     Optional<User> checkValidateUser(String token);
-
+    
 }

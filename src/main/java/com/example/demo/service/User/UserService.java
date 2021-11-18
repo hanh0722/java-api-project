@@ -13,4 +13,5 @@ public interface UserService {
     User getUserById(String id);
     User checkValidateUser(String token);
     User removeOTPChecking(String id);
+    User updatePasswordUser(String password, User user);
 }

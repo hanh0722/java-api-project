@@ -71,6 +71,14 @@ public class UserServiceImplement implements UserService, UserDetailsService {
     }
 
     @Override
+    public User updatePasswordUser(String password, User user) {
+        user.setPassword(passwordEncoder.encode(password));
+        user.setTokenChangePassword(null);
+        User newUserAfterUpdate = userRepository.save(user);
+        return newUserAfterUpdate;
+    }
+
+    @Override
     public User saveBasicInformation(String email, BasicInformation information) {
         User user = getUserByEmail(email);
         user.setBasic_information(information);
