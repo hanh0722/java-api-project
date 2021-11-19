@@ -134,4 +134,50 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrrorException(404, "user is not existed"));
         }
     }
+    @PostMapping("/addtocart/{user_id}")
+    public ResponseEntity<?> addToCart(@PathVariable String user_id,@RequestBody CartItem cartItem){
+        try {
+
+            User user = userService.getUserById(user_id);
+            ArrayList<CartItem> cartList = (ArrayList<CartItem>) user.getCart();
+            int d = 0;
+            for (CartItem cart : cartList) {
+                if (cart.getProduct_id().equals(cartItem.getProduct_id())) {
+                    d = 1;
+                    cart.setQuantity(cart.getQuantity() + cartItem.getQuantity());
+                }
+            }
+            if (d==0){
+                cartList.add(cartItem);
+            }
+            user.setCart(cartList);
+            userService.saveUserInfo(user);
+
+            return ResponseEntity.ok().body(user);
+        }catch(Exception err){
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(new ErrrorException(404, "add to cart fail"));
+        }
+    }
+    @PostMapping("/removecart/{user_id}")
+    public ResponseEntity<?> removeCart(@PathVariable String user_id,@RequestBody CartItem cartItem){
+        try {
+
+            User user = userService.getUserById(user_id);
+            ArrayList<CartItem> cartList = (ArrayList<CartItem>) user.getCart();
+            ArrayList<CartItem> cartListt = new ArrayList<>();
+            for (CartItem cart : cartList) {
+                if (cart.getProduct_id().equals(cartItem.getProduct_id())) {
+                    cart.setQuantity(cart.getQuantity() - cartItem.getQuantity());
+                }
+                if (cart.getQuantity()>0){
+                    cartListt.add(cart);
+                }
+            }
+            user.setCart(cartListt);
+            userService.saveUserInfo(user);
+            return ResponseEntity.ok().body(user);
+        }catch(Exception err){
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(new ErrrorException(404, "remove fail"));
+        }
+    }
 }

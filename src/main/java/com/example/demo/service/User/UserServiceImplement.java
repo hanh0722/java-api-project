@@ -96,4 +96,8 @@ public class UserServiceImplement implements UserService, UserDetailsService {
         user.setRole(role);
         return userRepository.insert(user);
     }
+    @Override
+    public void saveUserInfo(User user){
+        userRepository.save(user);
+    }
 }
