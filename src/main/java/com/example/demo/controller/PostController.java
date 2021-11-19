@@ -32,6 +32,7 @@ public class PostController {
     @PostMapping("/addPost")
     public String savePost(@RequestBody Post post){
         postRepository.save(post);
+
         return "Add Post success";
     }
     @PutMapping("/putPost/{id}")

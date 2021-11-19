@@ -19,6 +19,8 @@ public class User {
     @Id
     private String id;
     private String name;
+
+
     @Indexed(name = "email", unique = true)
     @Field(name = "email")
     private String email;
@@ -31,6 +33,19 @@ public class User {
     private BasicInformation basic_information;
     private String avatar;
     private Boolean verified;
+    public void setUser( String name, String email, String password, List<CartItem> cart, String phone, Collection<String> role, String tokenVefiry, String OTP, BasicInformation basic_information, String avatar, Boolean verified) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.cart = cart;
+        this.phone = phone;
+        Role = role;
+        this.tokenVefiry = tokenVefiry;
+        this.OTP = OTP;
+        this.basic_information = basic_information;
+        this.avatar = avatar;
+        this.verified = verified;
+    }
 
     public String getOTP() {
         return OTP;

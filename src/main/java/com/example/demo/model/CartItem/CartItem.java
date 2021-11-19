@@ -1,26 +1,20 @@
 package com.example.demo.model.CartItem;
 
-import java.math.BigDecimal;
 
-import com.example.demo.model.Product.Product;
-
-import org.springframework.data.mongodb.core.mapping.DBRef;
 
 public class CartItem {
-    @DBRef
-    private Product product;
-    private BigDecimal quantity;
-
-    public BigDecimal getQuantity() {
+    private String id;
+    private int quantity;
+    public int getQuantity() {
         return quantity;
     }
-    public Product getProduct() {
-        return product;
+    public String getProduct_id() {
+        return id;
     }
-    public void setProduct(Product product) {
-        this.product = product;
+    public void setProduct_id(String product) {
+        this.id = product;
     }
-    public void setQuantity(BigDecimal quantity) {
+    public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
 }

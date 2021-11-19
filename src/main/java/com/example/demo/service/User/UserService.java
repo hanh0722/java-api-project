@@ -2,8 +2,11 @@ package com.example.demo.service.User;
 
 import java.util.List;
 
+import com.example.demo.model.CartItem.CartItem;
 import com.example.demo.model.User.BasicInformation;
 import com.example.demo.model.User.User;
+import org.springframework.stereotype.Service;
+
 
 public interface UserService {
     User addNewUser(User user);
@@ -12,4 +15,5 @@ public interface UserService {
     List<User> getUsers();
     User getUserById(String id);
     User checkValidateUser(String token);
+    void saveUserInfo(User user);
 }

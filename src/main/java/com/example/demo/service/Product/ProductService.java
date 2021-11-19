@@ -17,7 +17,6 @@ public class ProductService {
     public Product addProduct(Product product){
         return productRepository.insert(product);
     }
-
     public List<Product> getProducts(){
         return productRepository.findAll();
     }

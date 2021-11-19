@@ -1,14 +1,19 @@
 package com.example.demo.controller.User;
 
+import java.math.BigDecimal;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.example.demo.model.CartItem.CartItem;
+import com.example.demo.model.Post;
 import com.example.demo.model.User.User;
+import com.example.demo.repository.UserRepository;
 import com.example.demo.service.User.UserService;
 import com.example.demo.util.ErrrorException;
 
+import org.bson.types.ObjectId;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,7 +32,6 @@ import lombok.AllArgsConstructor;
 @RequestMapping("api/user")
 public class UserController {
     private final UserService userService;
-
     @GetMapping
     public ResponseEntity<List<User>> getUsers(){
         return ResponseEntity.ok().body(userService.getUsers());
@@ -74,6 +78,52 @@ public class UserController {
 
         }catch(Exception err){
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(new ErrrorException(422, "user is not validation"));
+        }
+    }
+    @PostMapping("/addtocart/{user_id}")
+    public ResponseEntity<?> addToCart(@PathVariable String user_id,@RequestBody CartItem cartItem){
+        try {
+
+            User user = userService.getUserById(user_id);
+            ArrayList<CartItem> cartList = (ArrayList<CartItem>) user.getCart();
+            int d = 0;
+            for (CartItem cart : cartList) {
+                if (cart.getProduct_id().equals(cartItem.getProduct_id())) {
+                    d = 1;
+                    cart.setQuantity(cart.getQuantity() + cartItem.getQuantity());
+                }
+            }
+            if (d==0){
+                cartList.add(cartItem);
+            }
+            user.setCart(cartList);
+            userService.saveUserInfo(user);
+
+            return ResponseEntity.ok().body(user);
+        }catch(Exception err){
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(new ErrrorException(404, "add to cart fail"));
+        }
+    }
+    @PostMapping("/removecart/{user_id}")
+    public ResponseEntity<?> removeCart(@PathVariable String user_id,@RequestBody CartItem cartItem){
+        try {
+
+            User user = userService.getUserById(user_id);
+            ArrayList<CartItem> cartList = (ArrayList<CartItem>) user.getCart();
+            ArrayList<CartItem> cartListt = new ArrayList<>();
+            for (CartItem cart : cartList) {
+                if (cart.getProduct_id().equals(cartItem.getProduct_id())) {
+                    cart.setQuantity(cart.getQuantity() - cartItem.getQuantity());
+                }
+                if (cart.getQuantity()>0){
+                    cartListt.add(cart);
+                }
+            }
+            user.setCart(cartListt);
+            userService.saveUserInfo(user);
+            return ResponseEntity.ok().body(user);
+        }catch(Exception err){
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(new ErrrorException(404, "remove fail"));
         }
     }
 }

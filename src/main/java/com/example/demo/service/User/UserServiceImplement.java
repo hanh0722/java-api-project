@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import com.example.demo.model.CartItem.CartItem;
 import com.example.demo.model.User.BasicInformation;
 import com.example.demo.model.User.User;
 import com.example.demo.repository.UserRepository;
@@ -77,5 +78,9 @@ public class UserServiceImplement implements UserService, UserDetailsService {
         role.add("ROLE_USER");
         user.setRole(role);
         return userRepository.insert(user);
+    }
+    @Override
+    public void saveUserInfo(User user){
+        userRepository.save(user);
     }
 }
