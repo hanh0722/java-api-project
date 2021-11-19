@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.example.demo.model.CartItem.CartItem;
+import com.example.demo.model.User.BasicInformation;
 import com.example.demo.model.User.User;
 import com.example.demo.service.User.UserService;
 import com.example.demo.util.ErrrorException;
@@ -178,6 +179,42 @@ public class UserController {
             return ResponseEntity.ok().body(user);
         }catch(Exception err){
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(new ErrrorException(404, "remove fail"));
+        }
+    }
+    @PutMapping("/update")
+    public ResponseEntity<?> updateInformationUser(@RequestBody Map<String, String> context){
+        try{
+            String email = context.get("email");
+            String avatar = context.get("avatar");
+            String name = context.get("name");
+            String address = context.get("address");
+            String phone = context.get("phone");
+            String country = context.get("country");
+            String city = context.get("city");
+            String flag = context.get("flag");
+            String code = context.get("code");
+            BasicInformation basicInformation = new BasicInformation(country, flag, address, city, code);
+            User newUser = userService.saveChangeUser(email, name, avatar, phone, basicInformation);
+            return ResponseEntity.ok().body(newUser);
+        }catch(Exception err){
+            System.out.println(err);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ErrrorException(500, "Cannot update user"));
+        }
+    }
+    @PutMapping("/reset/password")
+    public ResponseEntity<?> resetPasswordUser(@RequestBody Map<String, String> context){
+        try{
+            String userId = context.get("id");
+            String password = context.get("password");
+            String confirmPassword = context.get("confirm_password");
+            if(!password.equals(confirmPassword) || password.isEmpty() || confirmPassword.isEmpty()){
+                return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(new ErrrorException(422, "Password is not match or empty"));
+            }
+            User user = userService.getUserById(userId);
+            User userAfterUpdate = userService.updatePasswordUser(password, user);
+            return ResponseEntity.ok().body(new ErrrorException(200, "Successfully"));
+        }catch(Exception error){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ErrrorException(500, "Cannot change password user"));
         }
     }
 }
