@@ -1,5 +1,6 @@
 package com.example.demo.service.Blog;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import com.example.demo.model.Blog.Blog;
@@ -16,6 +17,7 @@ public class BlogService {
     private final BlogRepository blogRepository;
 
     public Blog createBlog(Blog blog){
+        blog.setTime_created(System.currentTimeMillis());
         return blogRepository.insert(blog);
     }
     public Blog findBlogById(String id){

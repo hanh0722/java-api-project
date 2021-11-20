@@ -31,12 +31,13 @@ public class BlogController {
         return ResponseEntity.ok(listBlogFromDB);
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<?> createBlog(@RequestBody Blog blog) {
         try{
             Blog newBlog = blogService.createBlog(blog);
         return ResponseEntity.ok(newBlog);
         }catch(Exception err){
+            System.out.println(err);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ErrrorException(500, "Internal Server Error"));
         }
     }
