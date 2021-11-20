@@ -50,6 +50,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers("/api/user/reset-password/**").permitAll();
         http.authorizeRequests().antMatchers("/api/user/removecart/**").permitAll();
         http.authorizeRequests().antMatchers("/api/user/addtocart/**").permitAll();
+        http.authorizeRequests().antMatchers("/api/product/types").permitAll();
+        http.authorizeRequests().antMatchers("/api/blog/get/**").permitAll();
         // http.authorizeRequests().antMatchers(HttpMethod.GET, "/api/user").permitAll();
         // all route for permit all, dont need to check security
         http.authorizeRequests().antMatchers("/api/user/**").hasAnyAuthority("ROLE_USER"); 

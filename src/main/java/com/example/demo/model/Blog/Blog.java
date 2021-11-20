@@ -24,15 +24,6 @@ public class Blog {
     private String short_description;
     private long time_created = System.currentTimeMillis();
     private Boolean is_public;
-    private String id;
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public void setTime_created(long time_created) {
         this.time_created = time_created;

@@ -33,8 +33,20 @@ public class ProductController {
         }
     }
     @GetMapping
-    public ResponseEntity<List<Product>> getProducts(){
-        List<Product> products = productService.getProducts();
-        return ResponseEntity.ok(products);
+    public ResponseEntity<?> getProducts(){
+        try{
+            List<Product> products = productService.getProducts();
+            return ResponseEntity.ok(products);
+        }catch(Exception err){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ErrrorException(500, "cannot get products from server"));
+        }
+    }
+    @GetMapping("/types")
+    public ResponseEntity<?> getAllTypesProduct() {
+        try{
+            return ResponseEntity.ok().body(productService.getAllCategories());
+        }catch(Exception err){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ErrrorException(500, "Cannot get types from server"));
+        }
     }
 }
