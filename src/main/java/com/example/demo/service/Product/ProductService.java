@@ -26,4 +26,7 @@ public class ProductService {
     public List<ProductCategory> getAllCategories () {
         return Arrays.asList(ProductCategory.values());
     }
+    public Product getProductById(String id){
+        return productRepository.findById(id).orElseThrow(() -> new RuntimeException("product is not existed"));
+    }
 }
