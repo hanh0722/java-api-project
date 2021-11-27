@@ -25,22 +25,27 @@ public class BlogController {
     
     private final BlogService blogService;
 
-    @GetMapping
-    public ResponseEntity<List<Blog>> getAllBlogs() {
-        List<Blog> listBlogFromDB = blogService.getAllBlogs();
-        return ResponseEntity.ok(listBlogFromDB);
+    @GetMapping("/get")
+    public ResponseEntity<?> getAllBlogs() {
+        try{
+            List<Blog> listBlogFromDB = blogService.getAllBlogs();
+            return ResponseEntity.ok(listBlogFromDB);
+        }catch(Exception err){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ErrrorException(500, "cannot get data from server"));
+        }
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<?> createBlog(@RequestBody Blog blog) {
         try{
             Blog newBlog = blogService.createBlog(blog);
         return ResponseEntity.ok(newBlog);
         }catch(Exception err){
+            System.out.println(err);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ErrrorException(500, "Internal Server Error"));
         }
     }
-    @GetMapping("/{id}")
+    @GetMapping("/get/{id}")
     public ResponseEntity<?> findBlogById(@PathVariable String id) {
         try{
             Blog blog = blogService.findBlogById(id);

@@ -8,7 +8,7 @@ import com.example.demo.model.User.User;
 public interface UserService {
     User addNewUser(User user);
     User getUserByEmail(String email);
-    User saveBasicInformation(String email, BasicInformation information);
+    User saveChangeUser(String email, String name, String avatar, String phone ,BasicInformation information);
     List<User> getUsers();
     User getUserById(String id);
     User checkValidateUser(String token);

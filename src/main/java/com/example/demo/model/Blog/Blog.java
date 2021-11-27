@@ -1,8 +1,12 @@
 package com.example.demo.model.Blog;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import com.example.demo.model.User.User;
+
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import lombok.AllArgsConstructor;
@@ -10,23 +14,36 @@ import lombok.AllArgsConstructor;
 @Document(collection = "blogs")
 @AllArgsConstructor
 public class Blog {
-    @Id
-    private String _id;
+
+
     private String title;
     private String category;
     private String content;
     private String cover_image;
     private String short_description;
-    private LocalDateTime time_created = LocalDateTime.now();
+    private long time_created = System.currentTimeMillis();
     private Boolean is_public;
 
-    public String get_id() {
-        return _id;
+    private String user_id;
+
+    public String getId() {
+        return user_id;
     }
 
-    public void set_id(String _id) {
-        this._id = _id;
+    public void setId(String id) {
+        this.user_id = id;
     }
+
+
+    public void setTime_created(long time_created) {
+        this.time_created = time_created;
+    }
+
+    public long getTime_created() {
+        return time_created;
+    }
+
+
 
     public String getTitle() {
         return title;
@@ -66,14 +83,6 @@ public class Blog {
 
     public void setShort_description(String short_description) {
         this.short_description = short_description;
-    }
-
-    public LocalDateTime getTime_created() {
-        return time_created;
-    }
-
-    public void setTime_created(LocalDateTime time_created) {
-        this.time_created = time_created;
     }
 
     public Boolean getIs_public() {

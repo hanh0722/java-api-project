@@ -23,7 +23,6 @@ public class Product {
     private BigDecimal sale_percent;
     private BigDecimal last_price;
     
-
     public String getId(){
         return this.id;
     }

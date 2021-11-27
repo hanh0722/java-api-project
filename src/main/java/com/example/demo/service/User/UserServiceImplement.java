@@ -79,10 +79,13 @@ public class UserServiceImplement implements UserService, UserDetailsService {
     }
 
     @Override
-    public User saveBasicInformation(String email, BasicInformation information) {
-        User user = getUserByEmail(email);
-        user.setBasic_information(information);
-        User userAfterUpdate = userRepository.save(user);
+    public User saveChangeUser(String email, String name, String avatar, String phone ,BasicInformation information) {
+        User findUserByEmail = getUserByEmail(email);
+        findUserByEmail.setAvatar(avatar);
+        findUserByEmail.setName(name);
+        findUserByEmail.setBasic_information(information);
+        findUserByEmail.setPhone(phone);
+        User userAfterUpdate = userRepository.save(findUserByEmail);
         return userAfterUpdate;
     }
 

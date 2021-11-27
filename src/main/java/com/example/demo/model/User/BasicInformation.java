@@ -1,5 +1,8 @@
 package com.example.demo.model.User;
 
+import lombok.AllArgsConstructor;
+
+@AllArgsConstructor
 public class BasicInformation {
     private String country;
     private String flag;
