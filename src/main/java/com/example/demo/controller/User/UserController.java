@@ -168,6 +168,7 @@ public class UserController {
             for (CartItem cart : cartList) {
                 if (cart.getProduct_id().equals(cartItem.getProduct_id())) {
                     cart.setQuantity(cart.getQuantity() - cartItem.getQuantity());
+
                 }
                 if (cart.getQuantity()>0){
                     cartListt.add(cart);
