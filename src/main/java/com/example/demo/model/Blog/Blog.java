@@ -15,8 +15,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class Blog {
 
-    @Id
-    private String _id;
+
     private String title;
     private String category;
     private String content;
@@ -24,6 +23,17 @@ public class Blog {
     private String short_description;
     private long time_created = System.currentTimeMillis();
     private Boolean is_public;
+
+    private String user_id;
+
+    public String getId() {
+        return user_id;
+    }
+
+    public void setId(String id) {
+        this.user_id = id;
+    }
+
 
     public void setTime_created(long time_created) {
         this.time_created = time_created;
@@ -33,13 +43,7 @@ public class Blog {
         return time_created;
     }
 
-    public String get_id() {
-        return _id;
-    }
 
-    public void set_id(String _id) {
-        this._id = _id;
-    }
 
     public String getTitle() {
         return title;

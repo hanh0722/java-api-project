@@ -1,10 +1,8 @@
 package com.example.demo.controller.User;
-
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
 import com.example.demo.model.CartItem.CartItem;
 import com.example.demo.model.User.BasicInformation;
 import com.example.demo.model.User.User;
@@ -168,7 +166,12 @@ public class UserController {
             ArrayList<CartItem> cartListt = new ArrayList<>();
             for (CartItem cart : cartList) {
                 if (cart.getProduct_id().equals(cartItem.getProduct_id())) {
-                    cart.setQuantity(cart.getQuantity() - cartItem.getQuantity());
+                    if(cartItem.getQuantity()==0){
+                        cart.setQuantity(0);
+                    }
+                    else{
+                        cart.setQuantity(cart.getQuantity() - cartItem.getQuantity());
+                    }
                 }
                 if (cart.getQuantity()>0){
                     cartListt.add(cart);
