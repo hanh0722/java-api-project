@@ -186,15 +186,14 @@ public class UserController {
             ArrayList<CartItem> cartListt = new ArrayList<>();
             for (CartItem cart : cartList) {
                 if (cart.getProduct_id().equals(cartItem.getProduct_id())) {
-                    if (cartItem.getQuantity() == 0) {
+                    if(cartItem.getQuantity()==0){
                         cart.setQuantity(0);
-                    } else {
+                    }
+                    else{
                         cart.setQuantity(cart.getQuantity() - cartItem.getQuantity());
                     }
-                    cart.setQuantity(cart.getQuantity() - cartItem.getQuantity());
                 }
-
-                if (cart.getQuantity() > 0) {
+                if (cart.getQuantity()>0){
                     cartListt.add(cart);
                 }
             }
