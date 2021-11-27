@@ -8,6 +8,7 @@ import com.example.demo.util.ErrrorException;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -41,7 +42,6 @@ public class BlogController {
             Blog newBlog = blogService.createBlog(blog);
         return ResponseEntity.ok(newBlog);
         }catch(Exception err){
-            System.out.println(err);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ErrrorException(500, "Internal Server Error"));
         }
     }
@@ -54,14 +54,27 @@ public class BlogController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrrorException(404, "Post is not existed"));
         }
     }
-    @PutMapping("/{id}")
+    @PutMapping("/change/{id}")
     public ResponseEntity<?> changeBlogById(@PathVariable String id, @RequestBody Blog blog) {
         try{
             Blog newBlogAfterUpdate = blogService.changeBlogById(id, blog);
             return ResponseEntity.ok(newBlogAfterUpdate);
         }catch(Exception err){
+            System.out.println(err);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ErrrorException(500, "Internal Server Error"));
         }
     }
+
+    @DeleteMapping("/delete")
+    public ResponseEntity<?> deleteBlogById(@RequestBody String id){
+        try{
+            blogService.deleteBlogById(id);
+            return ResponseEntity.ok().body(new ErrrorException(200, "successfully"));
+        }catch(Exception err){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ErrrorException(500, "Cannot delete blog"));
+        }
+    }
+
+
 
 }

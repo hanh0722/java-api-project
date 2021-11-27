@@ -13,17 +13,19 @@ import lombok.AllArgsConstructor;
 @Service
 @AllArgsConstructor
 public class BlogService {
-    
+
     private final BlogRepository blogRepository;
 
-    public Blog createBlog(Blog blog){
+    public Blog createBlog(Blog blog) {
         blog.setTime_created(System.currentTimeMillis());
         return blogRepository.insert(blog);
     }
-    public Blog findBlogById(String id){
+
+    public Blog findBlogById(String id) {
         return blogRepository.findById(id).orElseThrow(() -> new RuntimeException("post is not existed"));
     }
-    public Blog changeBlogById(String id, Blog blog){
+
+    public Blog changeBlogById(String id, Blog blog) {
         Blog findBlog = findBlogById(id);
         findBlog.setTitle(blog.getTitle());
         findBlog.setShort_description(blog.getShort_description());
@@ -34,7 +36,13 @@ public class BlogService {
         Blog blogAfterUpdate = blogRepository.save(findBlog);
         return blogAfterUpdate;
     }
-    public List<Blog> getAllBlogs(){
+
+    public List<Blog> getAllBlogs() {
         return blogRepository.findAll();
+    }
+
+    public void deleteBlogById(String id) {
+        Blog blog = findBlogById(id);
+        blogRepository.delete(blog);
     }
 }

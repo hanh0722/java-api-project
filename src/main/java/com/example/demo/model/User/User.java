@@ -32,7 +32,7 @@ public class User {
     private String avatar;
     private Boolean verified;
     private String tokenChangePassword;
-
+    
     public String getOTP() {
         return OTP;
     }
