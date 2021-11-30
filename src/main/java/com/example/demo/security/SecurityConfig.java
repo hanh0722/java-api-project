@@ -61,6 +61,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers("/api/blog/create").hasAnyAuthority("ROLE_ADMIN");
         http.authorizeRequests().antMatchers("/api/blog/delete").hasAnyAuthority("ROLE_ADMIN");
         http.authorizeRequests().antMatchers("/api/blog/change/**").hasAnyAuthority("ROLE_ADMIN");
+        http.authorizeRequests().antMatchers("/api/product/update/**").hasAnyAuthority("ROLE_ADMIN");
         // error in set only check token, if it's good, can access
         // add specific route for checking security
         http.authorizeRequests().anyRequest().authenticated();

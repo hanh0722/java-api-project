@@ -8,6 +8,7 @@ import java.util.Map;
 import com.example.demo.model.CartItem.CartItem;
 import com.example.demo.model.Product.Product;
 import com.example.demo.model.User.BasicInformation;
+import com.example.demo.model.User.InvoiceModel;
 import com.example.demo.model.User.User;
 import com.example.demo.service.Product.ProductService;
 import com.example.demo.service.User.UserService;
@@ -49,6 +50,8 @@ public class UserController {
         try {
             URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/user").toUriString());
             ArrayList<CartItem> cart = new ArrayList<>();
+            ArrayList<InvoiceModel> invoices = new ArrayList<>();
+            user.setInvoices(invoices);
             user.setCart(cart);
 
             // register always have no cart
@@ -74,6 +77,7 @@ public class UserController {
             User user = userService.getUserByEmail(email);
             return ResponseEntity.ok(user);
         } catch (Exception err) {
+            System.out.println(err);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrrorException(404, "User is not existed"));
         }
     }

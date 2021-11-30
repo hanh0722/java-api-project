@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -63,6 +64,16 @@ public class ProductController {
             return ResponseEntity.ok().body(product);
         }catch(Exception err){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrrorException(404, "Product is not existed"));
+        }
+    }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<?> updateProductById(@PathVariable String id, @RequestBody Product product){
+        try{
+            Product pd = productService.updateProductById(id, product);
+            return ResponseEntity.ok().body(pd);
+        }catch(Exception err){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ErrrorException(500, "cannot change product"));
         }
     }
 }

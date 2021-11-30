@@ -32,9 +32,13 @@ public class User {
     private String avatar;
     private Boolean verified;
     private String tokenChangePassword;
-    
+    private List<InvoiceModel> invoices;
     public String getOTP() {
         return OTP;
+    }
+
+    public List<InvoiceModel> getInvoices() {
+        return invoices;
     }
 
     public void setOTP(String oTP) {
@@ -43,6 +47,10 @@ public class User {
 
     public String getTokenChangePassword() {
         return tokenChangePassword;
+    }
+
+    public void setInvoices(List<InvoiceModel> invoices) {
+        this.invoices = invoices;
     }
 
     public void setTokenChangePassword(String tokenChangePassword) {
